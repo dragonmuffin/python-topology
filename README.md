@@ -13,7 +13,7 @@ python-topology is a python3 library, implementing topology algorithms.
 #### Features:
 - Graph realizability on sphere with handles
 - homeomorphism of hypergraph to a sphere with handles
-- Rendering of hyperfraph
+- Rendering of hypergraph
 - Rendering of realization of hypergraph on sphere with handles
 - Graph thickening realizability on sphere with handles
 - Euler characteristic
