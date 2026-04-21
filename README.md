@@ -5,17 +5,26 @@
 python-topology is a python3 library, implementing topology algorithms.
 
 #### Objects:
-- Graph
-- Hypergraph
-- Sphere with handles
-- Thickening of a graph
-- Hieroglyph
+- Graph: classic graph
+- Hypergraph: 3-Hypergraph
+- Thickening of a graph: Graph with surroundings
+- Sphere with handles: Sphere with a glued handles
+- Hieroglyph: A word defining a disk with ribbons
 #### Features:
 - Graph realizability on sphere with handles
 - homeomorphism of hypergraph to a sphere with handles
 - Rendering of hyperfraph
 - Rendering of realization of hypergraph on sphere with handles
 - Graph thickening realizability on sphere with handles
-- Euler charactiristic
+- Euler characteristic
 - Boundary circle count
 - Hypergraph orientability
+#### Structure:
+- graph.py
+  - Graph
+  - Hypergraph
+  - Thickening of a graph
+- diversity.py
+  - Diversity
+  - Sphere with handles
+  - Hieroglyph 
