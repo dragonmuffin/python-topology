@@ -8,13 +8,14 @@ class TestGraph(unittest.TestCase):
 
     def tearDown(self):
         pass
-    # def test_handles(self):
-    #    K3 = Graph(3,[[1,2],[0,2],[0,1]])
-    #    K4 = Graph(4,[[1,2,3],[0,2,3],[0,1,3],[0,1,2]])
-    #    K5 = Graph(5,[[1,2,3,4],[0,2,3,4],[0,1,3,4],[0,1,2,4],[0,1,2,3]])
-    #    self.assertEqual(K3.handles(),0)
-    #    self.assertEqual(K4.handles(),0)
-    #    self.assertEqual(K5.handles(),1)
+
+     def test_handles(self):
+        K3 = Graph(3,[[1,2],[0,2],[0,1]])
+        K4 = Graph(4,[[1,2,3],[0,2,3],[0,1,3],[0,1,2]])
+        K5 = Graph(5,[[1,2,3,4],[0,2,3,4],[0,1,3,4],[0,1,2,4],[0,1,2,3]])
+        self.assertEqual(K3.handles(),0)
+        self.assertEqual(K4.handles(),0)
+        self.assertEqual(K5.handles(),1)
 
     def test_connected(self):
         K3 = Graph(3, [[1, 2], [0, 2], [0, 1]])
