@@ -1,5 +1,7 @@
 import math
 
+class InternalLogicError(AssertionError):
+    pass
 
 class Graph:
     '''
@@ -68,13 +70,13 @@ class Graph:
         '''
         used = [0] * self._nvertices
 
-        def dfs(g, v):
+        def dfs(g: Graph, v: int) -> None:
             for u in g._adj_list[v]:
                 if (not used[u]):
                     used[u] = 1
-                    dfs(u)
-        dfs(0)
-        for v in range(n):
+                    dfs(g, u)
+        dfs(self, 0)
+        for v in range(self._nvertices):
             if not used[v]:
                 return False
         return True
@@ -122,7 +124,7 @@ class Thickening:
             self._E += g.deg(i)
         self._E //= 2
 
-    def holes(self):
+    def holes(self) -> int:
         '''
         Get number of boundary circles of thickening.
         '''
@@ -143,11 +145,28 @@ class Thickening:
                     go_round(v, pos)
         return h
 
-    def handles(self):
+    def handles(self) -> int:
         '''
         Minimal number of handles of sphere, needed to realize this thickening.
         '''
         return (self._E - self._V - self.holes() + 2) // 2
+
+    def validate_euler_formula(self) -> None:
+        '''
+        Validate Euler Formula: V-E=2-2g-B, where
+        V - number of vertices
+        E - number of edges
+        g - number of handles
+        B - number of boundary circles
+        '''
+        if self._V - self._E != 2 - 2 * self.handles() - 2 * self.holes():
+            raise InternalLogicError('Euler formula validation falied!')
+
+    def euler_characteristic(self) -> int:
+        '''
+        Calculate Euler characteristic of Thickening.
+        '''
+        return 2 - 2 * self.handles() - self.holes()
 
     def __str__(self):
         return f'Thickening, {self._orders}'
