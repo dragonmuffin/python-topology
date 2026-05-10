@@ -131,7 +131,7 @@ class Thickening:
         n = self._V
         used = set()
 
-        def go_round(v, pos):
+        def go_round(v : int, pos):
             while (v, pos) not in used:
                 used.add((v, pos))
                 _v = self._orders[v][pos]
