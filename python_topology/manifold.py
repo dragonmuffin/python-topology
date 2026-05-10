@@ -25,7 +25,7 @@ class Manifold(ABC):
         if not graph.connected():
             raise ValueError('Graph must be connected.')
 
-        for k in range(graph._get_number_of_thickenings()):
+        for k in range(graph.get_number_of_thickenings()):
             if Thickening(graph, k).handles() <= target_g:
                 return True
         return False

@@ -4,70 +4,70 @@ class InternalLogicError(AssertionError):
     pass
 
 class Graph:
-    '''
+    """
     Undirected graph.
 
     Graph(n) -> empty graph on n vertices.
-    '''
+    """
 
     def __init__(self, n: int, adj_list: list):
         self._nvertices = n
         self._adj_list = [set() for i in range(n)]
         for u in range(n):
             for v in adj_list[u]:
-                if (v <= u):
+                if v <= u:
                     self.add_edge(u, v)
 
     def add_edge(self, u: int, v: int) -> None:
-        '''
+        """
         Add an edge between vertices with numbers u and v.
-        '''
+        """
         if (type(u) != int or type(v) != int or
            u < 0 or u >= self._nvertices or
                 v < 0 or v >= self._nvertices):
             raise ValueError('arguments must be numbers of vertices')
-        if (v == u):
-            raise ValueError('loops are not allowed')
-        if (u not in self._adj_list[v]):
+        if v == u:
+            raise ValueError('loops on 1 vertex are not allowed')
+        if u not in self._adj_list[v]:
             self._adj_list[u].add(v)
             self._adj_list[v].add(u)
         else:
             raise ValueError('double edges are not allowed')
 
     def remove_edge(self, u: int, v: int) -> None:
-        '''
+        """
         Remove an edge between vertices with numbers u and v.
-        '''
-        if (u in self._adj_list[v]):
+        """
+        if u in self._adj_list[v]:
             self._adj_list[u].remove(v)
             self._adj_list[v].remove(u)
         else:
             raise ValueError('edge is not in graph')
 
     def deg(self, v: int) -> int:
-        '''
+        """
         Get degree of a vertex v
-        '''
-        if (type(v) != int or v < 0 or v >= self._nvertices):
+        """
+        if type(v) != int or v < 0 or v >= self._nvertices:
             raise ValueError('argument must be a number of vertice')
         return len(self._adj_list[v])
 
-    def _get_number_of_thickenings(self) -> int:
+    def get_number_of_thickenings(self) -> int:
         res = 1
         for i in range(self._nvertices):
             res *= math.factorial(self.deg(i))
         return res
 
     def copy(self) -> 'Graph':
-        '''
+        """
         Copy this Graph object
-        '''
+        """
         return Graph(self._nvertices, self._adj_list)
 
     def connected(self) -> bool:
-        '''
+        """
         Is graph connected
-        '''
+        """
         used = [0] * self._nvertices
 
         def dfs(g: Graph, v: int) -> None:
@@ -82,24 +82,24 @@ class Graph:
         return True
 
     def handles(self) -> int:
-        '''
+        """
         Get minimal number of handles of sphere to realize this graph
-        '''
+        """
         res = Thickening(self, 0).handles()
-        for i in range(1, self._get_number_of_thickenings()):
+        for i in range(1, self.get_number_of_thickenings()):
             res = min(res, Thickening(self, i).handles())
         return res
 
 
 class Thickening:
-    '''
+    """
     Oriented thickening of a graph.
-    '''
+    """
 
     def __init__(self, g: Graph, k: int):
-        '''
+        """
         Get n-th thickening of graph g (in some order)
-        '''
+        """
         def get_kth_permutation(elements, k):
             n = len(elements)
             res = []
@@ -111,7 +111,7 @@ class Thickening:
             return res
         if type(g) != Graph or type(k) != int:
             raise ValueError('invalid argument type')
-        if k >= g._get_number_of_thickenings():
+        if k >= g.get_number_of_thickenings():
             raise ValueError('invalid argument type')
         n = g._nvertices
         self._orders = [[]] * n
@@ -125,14 +125,14 @@ class Thickening:
         self._E //= 2
 
     def holes(self) -> int:
-        '''
+        """
         Get number of boundary circles of thickening.
-        '''
+        """
         n = self._V
         used = set()
 
         def go_round(v, pos):
-            while ((v, pos) not in used):
+            while (v, pos) not in used:
                 used.add((v, pos))
                 _v = self._orders[v][pos]
                 _pos = (self._orders[_v].index(v)+1) % len(self._orders[_v])
@@ -140,32 +140,32 @@ class Thickening:
         h = 0
         for v in range(n):
             for pos in range(len(self._orders[v])):
-                if ((v, pos) not in used):
+                if (v, pos) not in used:
                     h += 1
                     go_round(v, pos)
         return h
 
     def handles(self) -> int:
-        '''
+        """
         Minimal number of handles of sphere, needed to realize this thickening.
-        '''
+        """
         return (self._E - self._V - self.holes() + 2) // 2
 
     def validate_euler_formula(self) -> None:
-        '''
+        """
         Validate Euler Formula: V-E=2-2g-B, where
         V - number of vertices
         E - number of edges
         g - number of handles
         B - number of boundary circles
-        '''
+        """
         if self._V - self._E != 2 - 2 * self.handles() - 2 * self.holes():
-            raise InternalLogicError('Euler formula validation falied!')
+            raise InternalLogicError('Euler formula validation failed!')
 
     def euler_characteristic(self) -> int:
-        '''
+        """
         Calculate Euler characteristic of Thickening.
-        '''
+        """
         return 2 - 2 * self.handles() - self.holes()
 
     def __str__(self):

@@ -20,10 +20,8 @@ class TestGraph(unittest.TestCase):
     def test_connected(self):
         K3 = Graph(3, [[1, 2], [0, 2], [0, 1]])
         K4 = Graph(4, [[1, 2, 3], [0, 2, 3], [0, 1, 3], [0, 1, 2]])
-        K5 = Graph(5, [[1, 2, 3, 4], [0, 2, 3, 4], [
-                   0, 1, 3, 4], [0, 1, 2, 4], [0, 1, 2, 3]])
-        two_cliques = Graph(
-            6, [[1, 2], [0, 2], [0, 1], [4, 5], [3, 5], [3, 4]])
+        K5 = Graph(5, [[1, 2, 3, 4], [0, 2, 3, 4], [0, 1, 3, 4], [0, 1, 2, 4], [0, 1, 2, 3]])
+        two_cliques = Graph(6, [[1, 2], [0, 2], [0, 1], [4, 5], [3, 5], [3, 4]])
         self.assertTrue(K3.connected())
         self.assertTrue(K3.connected())
         self.assertTrue(K3.connected())
@@ -32,8 +30,7 @@ class TestGraph(unittest.TestCase):
     def test_deg(self):
         K3 = Graph(3, [[1, 2], [0, 2], [0, 1]])
         K4 = Graph(4, [[1, 2, 3], [0, 2, 3], [0, 1, 3], [0, 1, 2]])
-        K5 = Graph(5, [[1, 2, 3, 4], [0, 2, 3, 4], [
-                   0, 1, 3, 4], [0, 1, 2, 4], [0, 1, 2, 3]])
+        K5 = Graph(5, [[1, 2, 3, 4], [0, 2, 3, 4], [0, 1, 3, 4], [0, 1, 2, 4], [0, 1, 2, 3]])
         bamboo_4 = Graph(4, [[1], [0, 2], [1, 3], [2]])
         self.assertEqual(K3.deg(0), 2)
         self.assertEqual(K3.deg(1), 2)
@@ -61,8 +58,7 @@ class TestThickening(unittest.TestCase):
         pass
 
     def test_handles(self):
-        K5 = Graph(5, [[1, 2, 3, 4], [0, 2, 3, 4], [
-                   0, 1, 3, 4], [0, 1, 2, 4], [0, 1, 2, 3]])
+        K5 = Graph(5, [[1, 2, 3, 4], [0, 2, 3, 4], [0, 1, 3, 4], [0, 1, 2, 4], [0, 1, 2, 3]])
         self.assertEqual(Thickening(K5, 0).handles(), 2)
         self.assertEqual(Thickening(K5, 1).handles(), 3)
         self.assertEqual(Thickening(K5, 65535).handles(), 2)
