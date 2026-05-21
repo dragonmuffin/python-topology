@@ -18,7 +18,7 @@ python-topology is a python3 library, implementing topology algorithms.
 - graph.py
   - Graph
   - Thickening of a graph
-- diversity.py
-  - Diversity
+- manifold.py
+  - Manifold
   - Sphere with handles
   - Hieroglyph 
